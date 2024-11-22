@@ -49,7 +49,13 @@ function Chat(props) {
     api();
 
     ///////////////////////////////////
-    socket.current = io(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}`);
+    socket.current = io(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}`, {
+      withCredentials: true,
+      extraHeaders: {
+        "my-custom-header": "abcd",
+      },
+      autoConnect: false,
+    });
     socket.current.on("sendDataServer", (dataGot) => {
       setMessageList((messageList) => [...messageList, dataGot.data]);
     });
